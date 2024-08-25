@@ -45,6 +45,7 @@
 
         <div class="bg-white bg-opacity-70 p-6 rounded-lg shadow-lg text-center text-white" style="background-image: url(https://github.com/Tanvir-yzu/Temperature-Hot/blob/main/images/bg-image.jpg?raw=true); background-size: cover; background-position: center;">
             <h1 class="text-2xl sm:text-3xl font-bold mb-4">Weather in {{ weather_data.location.city }}</h1>
+            <p class="text-base sm:text-lg"><strong>Country: </strong>{{ weather_data.location.country }}</p>
             <p class="text-base sm:text-lg"><strong>Temperature:</strong> {{ weather_data.current_observation.condition.temperature }}°C</p>
             <p class="text-base sm:text-lg"><strong>Condition:</strong> {{ weather_data.current_observation.condition.text }}</p>
             <p class="text-base sm:text-lg"><strong>Humidity:</strong> {{ weather_data.current_observation.atmosphere.humidity }}%</p>
