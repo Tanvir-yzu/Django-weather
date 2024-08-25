@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather in {{ location }}</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Get the latest weather updates for {{ location }} including temperature, condition, humidity, and wind speed.">
+    <meta name="keywords" content="weather, {{ location }}, temperature, forecast, humidity, wind, weather updates">
+    <meta name="author" content="Tanvir Islam">
+
+    <!-- Open Graph Meta Tags for social sharing -->
+    <meta property="og:title" content="Weather in {{ location }}">
+    <meta property="og:description" content="Get the latest weather updates for {{ location }} including temperature, condition, humidity, and wind speed.">
+    <meta property="og:image" content="https://github.com/Tanvir-yzu/Temperature-Hot/blob/main/images/bg-image.jpg?raw=true">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tz3-astute-davy.circumeo-apps.net/weather/{{ location }}">
+
     <!-- Tailwind CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
@@ -23,7 +36,7 @@
         
         <form method="post" class="mb-8 flex flex-col sm:flex-row justify-center items-center w-full sm:w-auto">
             {% csrf_token %}
-            <input type="text" name="location" placeholder="Enter Your City Name" value="{{ location }}" 
+            <input type="text" name="location" placeholder="Enter location" value="{{ location }}" 
                    class="w-full sm:w-auto px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
             <button type="submit" class="mt-4 sm:mt-0 sm:ml-2 px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600">
                 Get Weather
@@ -52,6 +65,22 @@
     <footer class="bg-gray-800 text-white text-center py-4">
         <p>&copy; 2024 Tanvir Islam. All rights reserved.</p>
     </footer>
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Weather in {{ location }}",
+      "description": "Get the latest weather updates for {{ location }} including temperature, condition, humidity, and wind speed.",
+      "url": "https://tz3-astute-davy.circumeo-apps.net/weather/{{ location }}",
+      "author": {
+        "@type": "Person",
+        "name": "Tanvir Islam"
+      },
+      "image": "https://github.com/Tanvir-yzu/Temperature-Hot/blob/main/images/bg-image.jpg?raw=true"
+    }
+    </script>
 
 </body>
 </html>
