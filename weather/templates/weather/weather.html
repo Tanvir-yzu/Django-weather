@@ -43,24 +43,56 @@
             </button>
         </form>
 
-        <div class="bg-white bg-opacity-70 p-6 rounded-lg shadow-lg text-center text-white" style="background-image: url(https://github.com/Tanvir-yzu/Temperature-Hot/blob/main/images/bg-image.jpg?raw=true); background-size: cover; background-position: center;">
-            <h1 class="text-2xl sm:text-3xl font-bold mb-4">Weather in {{ weather_data.location.city }}</h1>
-            <p class="text-base sm:text-lg"><strong>Country: </strong>{{ weather_data.location.country }}</p>
-            <p class="text-base sm:text-lg"><strong>Temperature:</strong> {{ weather_data.current_observation.condition.temperature }}°C</p>
-            <p class="text-base sm:text-lg"><strong>Condition:</strong> {{ weather_data.current_observation.condition.text }}</p>
-            <p class="text-base sm:text-lg"><strong>Humidity:</strong> {{ weather_data.current_observation.atmosphere.humidity }}%</p>
-            <p class="text-base sm:text-lg"><strong>Wind:</strong> {{ weather_data.current_observation.wind.speed }} mph 
-                {{ weather_data.current_observation.wind.direction }}</p>
-        </div>
+        {% if error_message %}
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-6" role="alert">
+                <strong class="font-bold">Error:</strong>
+                <span class="block sm:inline">{{ error_message }}</span>
+            </div>
+        {% endif %}
 
-        <h2 class="text-xl sm:text-2xl font-bold mt-8 mb-4 text-white">Forecast</h2>
-        <ul class="space-y-4">
-            {% for forecast in weather_data.forecasts %}
-                <li class="p-4 bg-gradient-to-r from-white-500 to-transparent rounded-lg shadow-xl text-white">
-                    <strong>{{ forecast.day }}:</strong> High {{ forecast.high }}°C, Low {{ forecast.low }}°C - {{ forecast.text }}
-                </li>
-            {% endfor %}
-        </ul>
+        {% if not error_message and weather_data %}
+            {% if weather_data.location and weather_data.current_observation and weather_data.current_observation.condition and weather_data.current_observation.atmosphere and weather_data.current_observation.wind %}
+                <div class="bg-white bg-opacity-70 p-6 rounded-lg shadow-lg text-center text-white" style="background-image: url(https://github.com/Tanvir-yzu/Temperature-Hot/blob/main/images/bg-image.jpg?raw=true); background-size: cover; background-position: center;">
+                    <h1 class="text-2xl sm:text-3xl font-bold mb-4">Weather in {{ weather_data.location.city }}</h1>
+                    <p class="text-base sm:text-lg"><strong>Country: </strong>{{ weather_data.location.country }}</p>
+                    <p class="text-base sm:text-lg"><strong>Temperature:</strong> {{ weather_data.current_observation.condition.temperature }}°C</p>
+                    <p class="text-base sm:text-lg"><strong>Condition:</strong> {{ weather_data.current_observation.condition.text }}</p>
+                    <p class="text-base sm:text-lg"><strong>Humidity:</strong> {{ weather_data.current_observation.atmosphere.humidity }}%</p>
+                    <p class="text-base sm:text-lg"><strong>Wind:</strong> {{ weather_data.current_observation.wind.speed }} mph 
+                        {{ weather_data.current_observation.wind.direction }}</p>
+                </div>
+            {% else %}
+                <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg relative mb-6" role="alert">
+                    <strong class="font-bold">Notice:</strong>
+                    <span class="block sm:inline">Current weather data is incomplete for this location.</span>
+                </div>
+            {% endif %}
+
+            {% if weather_data.forecasts %}
+                <h2 class="text-xl sm:text-2xl font-bold mt-8 mb-4 text-white">Forecast</h2>
+                <ul class="space-y-4">
+                    {% for forecast in weather_data.forecasts %}
+                        <li class="p-4 bg-gradient-to-r from-white-500 to-transparent rounded-lg shadow-xl text-white">
+                            <strong>{{ forecast.day }}:</strong> High {{ forecast.high }}°C, Low {{ forecast.low }}°C - {{ forecast.text }}
+                        </li>
+                    {% empty %}
+                        <li class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg relative" role="alert">
+                            No forecast available for this location.
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% elif not error_message %} {# Only show this if there wasn't a top-level error and forecasts are explicitly missing #}
+                 <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg relative mt-8 mb-4" role="alert">
+                    <strong class="font-bold">Notice:</strong>
+                    <span class="block sm:inline">Forecast data is not available for this location.</span>
+                </div>
+            {% endif %}
+        {% elif not error_message %} {# weather_data is None or empty, and no specific error_message was set #}
+            <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg relative mb-6" role="alert">
+                <strong class="font-bold">Info:</strong>
+                <span class="block sm:inline">Enter a location to get the weather forecast.</span>
+            </div>
+        {% endif %}
     </div>
 
     <footer class="bg-gray-800 text-white text-center py-4">

@@ -22,6 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-1o9urnh6ci=g$js_wn0beairqfi*0h)dv8ap)9s#g1ylwwx7b^'
 
+# RAPIDAPI_KEY: For production, this key should be set via an environment variable
+# and not committed directly in settings.py.
+RAPIDAPI_KEY = 'e1326a9c62msh4c90aa7db28b09fp13482cjsnbaa9986d5d44'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
